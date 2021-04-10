@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { product } from '../model/product';
+import { order } from '../model/order';
 
 @Injectable({
   providedIn: 'root'
@@ -13,9 +14,11 @@ export class ProductService {
   findAll() {
     return this.http.get<[product]>(this.apiUrl);
   }
+  allOrder() {
+    return this.http.get<[order]>(this.apiUrl);
+  }
 
   delete(id) {
-
     return this.http.delete(`${this.apiUrl}/${id}`)
   }
 
