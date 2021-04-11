@@ -1,29 +1,32 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { product } from '../model/product';
+import { IProduct } from '../model/product';
 import { order } from '../model/order';
+import { CONSTANTS } from '../config/constants';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProductService {
 
-  apiUrl = "";
+
   constructor(private http: HttpClient) { }
 
   findAll() {
-    return this.http.get<[product]>(this.apiUrl);
+    return this.http.get<[IProduct]>(CONSTANTS.EndPoints.PRODUCTS_LIST);
   }
+
+  // TODO
   allOrder() {
-    return this.http.get<[order]>(this.apiUrl);
+    return this.http.get<[order]>(CONSTANTS.EndPoints.PRODUCTS_LIST);
   }
 
   delete(id) {
-    return this.http.delete(`${this.apiUrl}/${id}`)
+    return this.http.delete(`${CONSTANTS.EndPoints.PRODUCTS_LIST}${id}`)
   }
 
-  addProduct(product){
-    return this.http.post<product>(this.apiUrl,product);
+  addProduct(product : IProduct){
+    return this.http.post<IProduct>(CONSTANTS.EndPoints.PRODUCTS_LIST,product);
   }
 
   // update(product){

@@ -1,9 +1,14 @@
-export interface product {
+export interface IProduct {
+  id: number;
+  name: string;
+  price: number;
+  marque: string;
+  productTypeVO: IProductTypeVO;
+  pictures: string[];
+}
 
-    id?: number;
-    product: string;
-    prix: any;
-    category: string;
-    img: any;
-    
-    }
+export interface IProductTypeVO {
+  id: number;
+  name: string;
+  description: string;
+}

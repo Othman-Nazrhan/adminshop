@@ -119,6 +119,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "shopadmin"
+    }
+  },
+  "defaultProject": "shopadmin",
+  "cli": {
+    "analytics": "b2f42729-31f3-4a2c-a037-00f6f0d88083"
+  }
 }
