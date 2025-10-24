@@ -1,35 +1,44 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { IProduct } from '../model/product';
 import { Order } from '../model/order';
-import { CONSTANTS } from '../config/constants';
+import { MOCK_PRODUCTS, MOCK_ORDERS } from '../mock-data';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProductService {
+  private products: IProduct[] = [...MOCK_PRODUCTS];
+  private orders: Order[] = [...MOCK_ORDERS];
 
-  constructor(private http: HttpClient) { }
+  constructor() { }
 
   findAll(): Observable<IProduct[]> {
-    return this.http.get<IProduct[]>(CONSTANTS.EndPoints.PRODUCTS_LIST);
+    return of(this.products);
   }
 
   allOrder(): Observable<Order[]> {
-    return this.http.get<Order[]>(CONSTANTS.EndPoints.ORDERS_LIST);
+    return of(this.orders);
   }
 
   delete(id: number): Observable<any> {
-    return this.http.delete(`${CONSTANTS.EndPoints.PRODUCTS_LIST}${id}`);
+    this.products = this.products.filter(p => p.id !== id);
+    return of(null);
   }
 
   addProduct(product: IProduct): Observable<IProduct> {
-    return this.http.post<IProduct>(CONSTANTS.EndPoints.PRODUCTS_LIST, product);
+    const newId = Math.max(...this.products.map(p => p.id)) + 1;
+    const newProduct = { ...product, id: newId };
+    this.products.push(newProduct);
+    return of(newProduct);
   }
 
   update(product: IProduct): Observable<IProduct> {
-    return this.http.put<IProduct>(`${CONSTANTS.EndPoints.PRODUCTS_LIST}${product.id}`, product);
+    const index = this.products.findIndex(p => p.id === product.id);
+    if (index !== -1) {
+      this.products[index] = product;
+    }
+    return of(product);
   }
 
 }

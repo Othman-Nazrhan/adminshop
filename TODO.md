@@ -1,41 +1,23 @@
-# Refactoring Plan for Admin Shop Angular Application
+# TODO: Implement Edit Product Functionality
 
-## 1. Fix Routing Structure
-- [ ] Move routes from app.module.ts to app-routing.module.ts
-- [ ] Add routes for product-list and order components
-- [ ] Implement lazy loading for components
+## Steps to Complete
 
-## 2. Refactor Service
-- [ ] Add proper TypeScript types to all methods in products.service.ts
-- [ ] Fix allOrder() method to use correct endpoint
-- [ ] Rename service class consistently
-- [ ] Add missing update method
-- [ ] Add proper error handling
+1. **Add Edit Button to Product List**
+   - Update `src/app/components/product-list/product-list.component.html` to include an Edit button in the Actions column that navigates to `/edit-product/:id`.
 
-## 3. Improve Models
-- [ ] Rename 'order' interface to 'Order' in order.ts
-- [ ] Fix property types (prix: any to number)
+2. **Add Route for Edit Product**
+   - Update `src/app/app-routing.module.ts` to add a route for `edit-product/:id` pointing to `EditProductComponent`.
 
-## 4. Update Components
-- [ ] Remove hardcoded values in add-product.component.ts
-- [ ] Improve form handling and error management in add-product.component.ts
-- [ ] Fix logic in order.component.ts (remove unused resultOrders)
-- [ ] Add error handling to order.component.ts
-- [ ] Fix equality check in product-list.component.ts (!= to !==)
-- [ ] Add error handling to product-list.component.ts
+3. **Implement Edit Product Component Logic**
+   - Update `src/app/components/edit-product/edit-product.component.ts`:
+     - Import `ActivatedRoute`, `Router`, `FormControl`, `FormGroup`, `Validators`.
+     - Inject `ActivatedRoute`, `ProductService`, `Router`.
+     - Create a form group similar to add-product.
+     - In `ngOnInit`, get product ID from route params, load product data, populate form.
+     - Add `update()` method to handle form submission, call service update, navigate back to product list.
 
-## 5. Clean Up Module
-- [ ] Remove duplicate routing imports from app.module.ts
-- [ ] Organize imports properly in app.module.ts
+4. **Update Edit Product Template**
+   - Update `src/app/components/edit-product/edit-product.component.html` with a form similar to add-product, but pre-populated with product data and submit button says "Update Product".
 
-## 6. Add Missing Constants
-- [ ] Add orders endpoint to constants.ts
-
-## 7. Implement Error Handling
-- [ ] Add global error handling strategy
-- [ ] Improve error messages in components
-
-## Follow-up Steps
-- [ ] Test application functionality
-- [ ] Run unit tests
-- [ ] Check for compilation errors
+5. **Test the Edit Functionality**
+   - Run the app and verify that editing a product works: loads data, updates on submit, redirects to list.

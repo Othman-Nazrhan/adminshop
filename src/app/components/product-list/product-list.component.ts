@@ -11,6 +11,7 @@ export class ProductListComponent implements OnInit {
   products: IProduct[] = [];
   loading = false;
   error: string | null = null;
+  searchTerm: string = '';
 
   constructor(private productService: ProductService) { }
 
@@ -34,14 +35,21 @@ export class ProductListComponent implements OnInit {
     );
   }
 
+  trackByProductId(index: number, product: IProduct): number {
+    return product.id;
+  }
+
   deleteProduct(id: number): void {
     if (confirm('Are you sure you want to delete this product?')) {
+      this.loading = true;
       this.productService.delete(id).subscribe(
         () => {
           this.products = this.products.filter(product => product.id !== id);
+          this.loading = false;
         },
         error => {
           this.error = 'Failed to delete product';
+          this.loading = false;
           console.error('Error deleting product:', error);
         }
       );
