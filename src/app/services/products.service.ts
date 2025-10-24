@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 import { IProduct } from '../model/product';
-import { order } from '../model/order';
+import { Order } from '../model/order';
 import { CONSTANTS } from '../config/constants';
 
 @Injectable({
@@ -9,28 +10,26 @@ import { CONSTANTS } from '../config/constants';
 })
 export class ProductService {
 
-
   constructor(private http: HttpClient) { }
 
-  findAll() {
-    return this.http.get<[IProduct]>(CONSTANTS.EndPoints.PRODUCTS_LIST);
+  findAll(): Observable<IProduct[]> {
+    return this.http.get<IProduct[]>(CONSTANTS.EndPoints.PRODUCTS_LIST);
   }
 
-  // TODO
-  allOrder() {
-    return this.http.get<[order]>(CONSTANTS.EndPoints.PRODUCTS_LIST);
+  allOrder(): Observable<Order[]> {
+    return this.http.get<Order[]>(CONSTANTS.EndPoints.ORDERS_LIST);
   }
 
-  delete(id) {
-    return this.http.delete(`${CONSTANTS.EndPoints.PRODUCTS_LIST}${id}`)
+  delete(id: number): Observable<any> {
+    return this.http.delete(`${CONSTANTS.EndPoints.PRODUCTS_LIST}${id}`);
   }
 
-  addProduct(product : IProduct){
-    return this.http.post<IProduct>(CONSTANTS.EndPoints.PRODUCTS_LIST,product);
+  addProduct(product: IProduct): Observable<IProduct> {
+    return this.http.post<IProduct>(CONSTANTS.EndPoints.PRODUCTS_LIST, product);
   }
 
-  // update(product){
-  //   return this.http.put(`${this.apiUrl}/${product.id}`,product)
-  // }
+  update(product: IProduct): Observable<IProduct> {
+    return this.http.put<IProduct>(`${CONSTANTS.EndPoints.PRODUCTS_LIST}${product.id}`, product);
+  }
 
 }

@@ -1,10 +1,7 @@
-export interface order {
-
+export interface Order {
     id?: number;
-    client:string;
+    client: string;
     product: string;
-    prix: any;
+    prix: number;
     category: string;
-  
- 
-    }
+}

@@ -9,23 +9,42 @@ import { IProduct } from 'src/app/model/product';
 })
 export class ProductListComponent implements OnInit {
   products: IProduct[] = [];
-  constructor(private productService : ProductService) { }
+  loading = false;
+  error: string | null = null;
+
+  constructor(private productService: ProductService) { }
 
   ngOnInit(): void {
-    this.getProducts()
+    this.getProducts();
   }
 
-  getProducts() {
-    this.productService.findAll()
-      .subscribe(products => {
-       this.products = products
-      });
+  getProducts(): void {
+    this.loading = true;
+    this.error = null;
+    this.productService.findAll().subscribe(
+      products => {
+        this.products = products;
+        this.loading = false;
+      },
+      error => {
+        this.error = 'Failed to load products';
+        this.loading = false;
+        console.error('Error loading products:', error);
+      }
+    );
   }
 
-  deleteProduct(id) {
-    this.productService.delete(id)
-      .subscribe(() => {
-        this.products = this.products.filter(product => product.id != id)
-      })
+  deleteProduct(id: number): void {
+    if (confirm('Are you sure you want to delete this product?')) {
+      this.productService.delete(id).subscribe(
+        () => {
+          this.products = this.products.filter(product => product.id !== id);
+        },
+        error => {
+          this.error = 'Failed to delete product';
+          console.error('Error deleting product:', error);
+        }
+      );
+    }
   }
 }

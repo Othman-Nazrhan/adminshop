@@ -1,26 +1,30 @@
 <div class="container">
+    <div *ngIf="error" class="alert alert-danger">{{ error }}</div>
 
-    <form [formGroup]="product" (ngSubmit)="add(product)" class="my-4">
-        <h1>product</h1>
+    <form [formGroup]="productForm" (ngSubmit)="add()" class="my-4">
+        <h1>Add Product</h1>
         <div class="form-row">
             <div class="form-group col-md-4">
-                <input formControlName="product" type="name" class="form-control" placeholder="product">
+                <label for="name">Product Name</label>
+                <input formControlName="name" type="text" class="form-control" placeholder="Product name" id="name">
             </div>
             <div class="form-group col-md-4">
-                <input  formControlName="prix" type="test" class="form-control" id="inputpris4" placeholder="prix">
+                <label for="price">Price</label>
+                <input formControlName="price" type="number" class="form-control" placeholder="Price" id="price">
             </div>
             <div class="form-group col-md-4">
-                <input type="text" formControlName="category" class="form-control" id="inputAddress" placeholder="category">
+                <label for="category">Category</label>
+                <input type="text" formControlName="category" class="form-control" placeholder="Category" id="category">
             </div>
-
         </div>
-          <div class="form-group col-md-4 ">
-                <label for="exampleFormControlFile1">image</label>
-                <input formControlName="img" (change)="handleUpload($event)" type="file" class="form-control-file" id="exampleFormControlFile1">
-            </div>
-        <button type="submit" class="btn btn-primary">Add</button>
+        <div class="form-group">
+            <label for="image">Image</label>
+            <input formControlName="image" (change)="handleUpload($event)" type="file" class="form-control-file" id="image">
+        </div>
+        <button type="submit" class="btn btn-primary" [disabled]="loading || productForm.invalid">
+            <span *ngIf="loading">Adding...</span>
+            <span *ngIf="!loading">Add Product</span>
+        </button>
     </form>
-
-    <app-product-list></app-product-list>
 </div>
 

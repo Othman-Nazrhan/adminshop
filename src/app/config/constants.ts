@@ -5,6 +5,8 @@ export namespace CONSTANTS {
       //PRODUCTS
       static readonly PRODUCTS_LIST: string = `${DOMAIN}/public/products/`;
       static readonly CATEGORIES_LIST: string = `${DOMAIN}/public/products/categories/`;
+      //ORDERS
+      static readonly ORDERS_LIST: string = `${DOMAIN}/public/orders/`;
     }
 
     export class Messages {
